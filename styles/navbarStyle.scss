@@ -1,0 +1,37 @@
+// import mixins
+@use '../sass-helpers/mixins' as *;
+
+nav {
+  min-height: 5rem;
+  padding: 0 .7rem;
+  background-color: #eee;
+  @include customDisplay( flex, space-between, center );
+  gap: 2rem;
+
+  div {
+    @include d-f-cc;
+  }
+
+  ul {
+    list-style: none;
+
+    li {
+      display: inline;
+
+      a {
+
+        &:hover {
+          background-color: rgb(219, 218, 218);
+        }
+
+        padding: .5rem .5rem;
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+    }
+
+  }
+
+}

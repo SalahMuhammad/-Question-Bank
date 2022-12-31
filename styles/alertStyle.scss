@@ -1,0 +1,27 @@
+.alert-wrapper {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  .alert {
+    // width: fit-content;
+    position: absolute;
+    top: .5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+
+    animation: hide-notification;
+    animation-delay: 2s;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes hide-notification {
+  to {
+    opacity: 0;
+    top: -6rem;
+    visibility: hidden;
+  }
+}
+

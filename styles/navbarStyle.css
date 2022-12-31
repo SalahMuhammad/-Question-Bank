@@ -1,0 +1,36 @@
+nav {
+  min-height: 5rem;
+  padding: 0 0.7rem;
+  background-color: #eee;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 2rem;
+}
+nav div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  place-content: center;
+}
+nav ul {
+  list-style: none;
+}
+nav ul li {
+  display: inline;
+}
+nav ul li a {
+  padding: 0.5rem 0.5rem;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+nav ul li a:hover {
+  background-color: rgb(219, 218, 218);
+}

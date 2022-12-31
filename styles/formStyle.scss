@@ -1,0 +1,63 @@
+// import mixins
+@use "../sass-helpers/mixins" as *;
+
+// import variables
+@use "../sass-helpers/variables" as *;
+
+// get initializations
+@include getInit( $form-background-color );
+
+form {
+  display: flex;
+  place-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  
+  min-height: 100vh;
+  .input-box {
+    position: relative;
+    input, textarea {
+      width: 100%;
+      padding: 0.62rem;
+      background-color: $form-background-color;
+      color: #fff;
+      outline: none;
+      transition: 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.25) {
+        radius: 0.2rem;
+      }
+      &:focus,
+      &:valid {
+        border-color: $turquoise;
+      }
+      &:focus ~ span,
+      &:valid ~ span,
+      &:focus ~ label,
+      &:valid ~ label {
+        padding: 0 0.62rem;
+        background-color: $form-background-color;
+        color: $turquoise;
+        font-size: 0.65rem;
+        letter-spacing: 0.2rem;
+        transform: translate(0.62rem, -0.44rem);
+        transition: 0.3s;
+        border: {
+          left: 1px solid $turquoise;
+          right: 1px solid $turquoise;
+        }
+        // color: $form-background-color;
+        // background-color: #045047;
+        // border-radius: 0.5rem;
+      }
+    }
+    span, label {
+      position: absolute;
+      left: 0;
+      padding: 0.6rem;
+      pointer-events: none;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      transition: 0.5s;
+    }
+  }
+}

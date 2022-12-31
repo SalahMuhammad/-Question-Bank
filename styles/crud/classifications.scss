@@ -1,0 +1,42 @@
+// import mixins
+@use '../../sass-helpers/mixins' as *;
+
+@include getInit( #fff );
+
+main {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 33.33%);
+
+  section {
+    background-color: #eee;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(211, 209, 209)
+    }
+    
+    a {
+      text-decoration: none;
+      color: #000;
+
+      h4 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: .7rem .5rem;
+        text-align: center;
+      }
+
+    }
+
+    article {
+      @include d-f-cc;
+      padding: 1rem .5rem ;
+      a {
+        margin: 0 .5rem;
+      }
+    }
+    
+  }
+}

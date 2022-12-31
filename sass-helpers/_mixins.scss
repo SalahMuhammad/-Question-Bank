@@ -1,0 +1,37 @@
+/// get initializations
+/// @param { background-color-of-body };
+@mixin getInit( $body-background-color ) {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Roboto", sans-serif;
+    background-color: $body-background-color;
+  }
+
+  main {
+    width: 80%;
+    margin: 1rem auto;
+  }
+}
+
+/// display flex center center;
+@mixin d-f-cc() {
+  display: flex;
+  place-content: center;
+}
+
+/// display
+@mixin customDisplay( $display, $justify-content, $align-items ) {
+  display: $display;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin wrapper( $width, $top-bottom ) {
+  width: $width;
+  margin: $top-bottom auto;
+}
