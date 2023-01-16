@@ -1,45 +1,37 @@
 <?php
+require_once './myFunctions.php';
 
-if ( $_SERVER['QUERY_STRING'] ) {
+require_once './database_config.php';
+require_once './classes/MySQLHandler.class.php';
+require_once './classes/crud/classifications.class.php';
 
-  require_once './myFunctions.php';
+$classifications  = new Classifications();
+$result = '';
 
-  require_once './classes/databaseHandler.class.php';
-  require_once './classes/crud/classifications.class.php';
+if ( isset( $_GET ['submit'] ) ) {
 
-  $handler  = new Classifications();
+  $c_id   = isset( $_GET ['c_id'] )   ? clean( $_GET ['c_id'] )   : null;
+  $c_name = isset( $_GET ['c_name'] ) ? clean( $_GET ['c_name'] ) : null;
 
-  if ( !isset( $_GET ['c_id'] ) && isset( $_GET ['c_name'] ) ) {
-    // insert
-    $result = $handler -> insert( clean( $_GET ['c_name'] ) );
-    header( 'Location: ../../app/classificationsForm.php?status=' . $result );
-    exit;
+  switch ( $_GET ['submit'] ) {
+    case 'Save':
+      $result = $classifications -> insertC( array( "c_id" => null, "c_name" => $c_name ) );
+      break;
 
-  } else if ( isset( $_GET ['c_id'] ) ) {
-    
-    if ( isset( $_GET ['c_name'] ) ) { 
-      // upadte
-      $result = $handler -> update( $_GET ['c_id'], clean( $_GET ['c_name'] ) );
-      header( 'Location: ../../app/classifications.php?status=' . $result );
-      exit;
-    
-    } else { 
-      // delete
-      $result = $handler -> delete( $_GET ['c_id'] );
-      header( 'Location: ../../app/classifications.php?status=' . $result );
-      exit;
+    case 'Update':
+      $result = $classifications -> updateC( array( "c_name" => $c_name ), $c_id );
+      break;
 
-    }
+    case 'Delete':
+      $result = $classifications -> deleteC( $c_id );
+      break;
   }
 
-  $handler = null;
-
-  header( 'Location: ../../app/classifications.php' );
-  exit;
-
-} else {
-
-  header( 'Location: ../../app/classifications.php' );
+  header( 'Location: ../../app/classifications.php?status=' . $result );
   exit;
 
 }
+
+$classifications = null;
+header( 'Location: ../../app/classifications.php' );
+exit;

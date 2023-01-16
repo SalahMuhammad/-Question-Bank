@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once 'sessionInitializer.php';
 
 // c = classification, e = exam
 @$c_id       = $_SESSION ['reference'] ['c_id'];

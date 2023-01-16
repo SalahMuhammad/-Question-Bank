@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once 'sessionInitializer.php';
 
 if ( isset( $_GET ['e_id'] ) && isset( $_GET ['e_name'] ) ) {
 
@@ -18,9 +18,6 @@ if ( !$e_id || !$e_name ) {
   exit;
 
 }
-
-$e_id   = $_SESSION ['reference'] ['e_id'];
-$e_name = $_SESSION ['reference'] ['e_name'];
 
 require_once '../scripts/php/classes/databaseHandler.class.php';
 require_once '../scripts/php/classes/crud/questions.class.php';

@@ -1,83 +1,73 @@
 <?php
 
-class Classifications extends DatabaseHandler {
+class Classifications extends MySQLHandler {
+	
+	private $_table = 'classifications';
 
-	function __construct() {
-		@$this -> dbConnection();
-	}
+	public function __construct() {
+
+    global $config;
+
+    parent::__construct( $config );
+
+  }
+
+	public function getRow( $id ) {
+
+    $this -> select( $this -> _table, "c_id = $id", "c_name" );
+
+    return $this -> fetch();
+
+  }
 
 	public function getAll() {
+
+    $this -> select( $this -> _table, "", "*", "c_id DESC");
+
+    return $this -> fetchAll();
+
+  }
+
+	public function insertC( array $data ) {
+
 		try {
-			$query	= 'SELECT * FROM classifications ORDER BY c_id DESC';
-			
-			$stmt	= $this -> con -> prepare( $query );
-			$stmt -> execute();
 
-			return $stmt -> get_result() -> fetch_all();
+			return $this -> insert( $this -> _table, $data );
 
-		} catch( Exception $e ) {
-			echo 'Failed To Load Data: ' . $e -> getMessage();
-		}
+		} catch ( mysqli_sql_exception $e ) {
 
-		return [];
-	}
-
-	public function getClassificationID( $c_name ) {
-		try {
-			$query	= 'SELECT c_id FROM classifications WHERE c_name = \''. $c_name .'\'';
-
-			$stmt		= $this -> con -> prepare( $query );
-			$stmt -> execute();
-
-			return $c_id 	= $stmt -> get_result() -> fetch_all() [0] [0] ?? -1;
-			
-		} catch ( Exception $e) {
-			return 'Failed To getClassificationID: ' . $e -> getMessage();
-		}
-	}
-
-	public function insert( $c_name ) {
-		try {
-			$query	= 'INSERT INTO classifications VALUES (null, ?)';
-
-			$stmt	= $this -> con -> prepare( $query );
-			$stmt -> bind_param( 's',  $c_name);
-			$stmt -> execute();
-
-			return  'Classification Inserted Successfully...';
-
-		} catch( Exception $e ) {
 			return 'Failed To Insert: ' . $e -> getMessage();
+
 		}
+
 	}
 
-	public function update( $c_id, $c_name ) {
+	public function updateC( array $data, $c_id ) {
+
 		try {
-			$query 	= 'UPDATE classifications SET c_name = ? WHERE c_id = ?';
 
-			$stmt	= $this -> con -> prepare( $query );
-			$stmt -> bind_param( 'si', $c_name, $c_id );
-			$stmt -> execute();
+			return $this -> update( $this -> _table, $data, "c_id = $c_id" );
 
-			return  'Classification Updated Successfully...';
+		} catch ( mysqli_sql_exception $e ) {
 
-		} catch( Exception $e ) {
 			return 'Failed To Update: ' . $e -> getMessage();
+
 		}
+
 	}
 
-	public function delete( $c_id ) {
+	public function deleteC( $c_id ) {
+
 		try {
-			$query	= 'DELETE FROM classifications WHERE c_id = ?';
 
-			$stmt 	= $this -> con -> prepare( $query );
-			$stmt -> bind_param( 'i', $c_id );
-			$stmt -> execute();
+			return $this -> delete( $this -> _table, "c_id = $c_id" );
 
-			return 'Classification Deleted Successfully...';
+		} catch ( mysqli_sql_exception $e ) {
 
-		} catch( Exception $e ) {
 			return 'Failed To Delete: ' . $e -> getMessage();
+
 		}
+
 	}
+
 }

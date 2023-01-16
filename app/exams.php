@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once 'sessionInitializer.php';
 
 if ( isset( $_GET ['c_id'] ) && isset( $_GET ['c_name'] ) ) {
 

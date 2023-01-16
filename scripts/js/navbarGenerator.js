@@ -2,7 +2,7 @@ let navbar = document.querySelector( 'nav' );
 
 if ( navbar ) {
 
-  fetch( 'navbar.html' )
+  fetch( 'navbar.php' )
   .then( ( res ) => res.text() )
   .then( ( data ) => {
 

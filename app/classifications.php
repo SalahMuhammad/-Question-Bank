@@ -1,6 +1,9 @@
 <?PHP
 
-require_once '../scripts/php/classes/databaseHandler.class.php';
+require_once 'sessionInitializer.php';
+
+require_once '../scripts/php/database_config.php';
+require_once '../scripts/php/classes/MySQLHandler.class.php';
 require_once '../scripts/php/classes/crud/classifications.class.php';
 
 $handler 	= new Classifications();
@@ -39,12 +42,12 @@ $handler = null;
 		<?php 
 		foreach ( $c_arr as $value ) { ?>
 			<section>
-				<a href="./exams.php?c_id=<?php echo $value [0] ?>&c_name=<?php echo $value [1]; ?>">
-					<h4 title="<?php echo $value [1]; ?>"><?php echo $value [1]; ?></h4>
+				<a href="./exams.php?c_id=<?= $value ['c_id'] ?>&c_name=<?= $value ['c_name']; ?>">
+					<h4 title="<?= $value ['c_name']; ?>"><?= $value ['c_name']; ?></h4>
 				</a>
 				<article>
-					<a class="btn btn-success" href="./classificationsForm.php?c_id=<?php echo $value [0]; ?>&c_name=<?php echo $value [1]; ?>">Edit</a>
-					<a class="btn btn-danger" href="../scripts/php/classificationsAction.php?c_id=<?php echo $value [0]; ?>">Delete</a>
+					<a class="btn btn-success" href="./classificationsForm.php?c_id=<?= $value ['c_id']; ?>">Edit</a>
+					<a class="btn btn-danger" href="../scripts/php/classificationsAction.php?submit=Delete&c_id=<?= $value ['c_id']; ?>">Delete</a>
 				</article>
 			</section>
 		<?php } ?>

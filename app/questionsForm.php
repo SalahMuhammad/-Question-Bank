@@ -1,6 +1,6 @@
 <?php 
 
-session_start();
+require_once 'sessionInitializer.php';
 
 $e_id       = $_SESSION ['reference'] ['e_id'];
 
