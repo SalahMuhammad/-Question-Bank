@@ -1,9 +1,7 @@
 <?php
 
-require_once 'sessionInitializer.php';
+require_once 'config.php';
 
-require_once '../scripts/php/database_config.php';
-require_once '../scripts/php/classes/MySQLHandler.class.php';
 require_once '../scripts/php/classes/crud/classifications.class.php';
 
 $c_id = isset( $_GET ['c_id'] ) ? $_GET ['c_id'] : 0;
@@ -13,6 +11,8 @@ $classifications = new Classifications();
 $row = $classifications -> getRow( $c_id );
 
 $c_name = @$row ['c_name' ];
+
+$classifications = null;
 
 ?>
 
@@ -24,14 +24,11 @@ $c_name = @$row ['c_name' ];
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Classification Form</title>
 
-  <?php require_once './styleLinks.php'; ?>
+  <link rel="stylesheet" type="text/css" href="../styles/bootstrap.min.css">
 
   <link rel="stylesheet" type="text/css" href="../styles/formStyle.css">
 </head>
 <body>
-
-  <!-- alert -->
-	<?php require_once './alert.php'; ?>
 
   <main>
     <form action="../scripts/php/classificationsAction.php" methos="get">
@@ -54,5 +51,6 @@ $c_name = @$row ['c_name' ];
   </main>
 
   <script type="text/javascript" src="../scripts/js/bootstrap.bundle.min.js"></script>
+  
 </body>
 </html>

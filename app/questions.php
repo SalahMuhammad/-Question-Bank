@@ -1,6 +1,8 @@
 <?php
 
-require_once 'sessionInitializer.php';
+require_once 'config.php';
+
+require_once '../scripts/php/classes/crud/questions.class.php';
 
 if ( isset( $_GET ['e_id'] ) && isset( $_GET ['e_name'] ) ) {
 
@@ -9,24 +11,21 @@ if ( isset( $_GET ['e_id'] ) && isset( $_GET ['e_name'] ) ) {
   
 }
 
-$e_id   = $_SESSION ['reference'] ['e_id'];
-$e_name = $_SESSION ['reference'] ['e_name'];
+$e_id   = @$_SESSION ['reference'] ['e_id'];
+$e_name = @$_SESSION ['reference'] ['e_name'];
 
-if ( !$e_id || !$e_name ) {
+if( ! $e_id || ! $e_name ) {
 
   header( 'Location: ./exams.php');
   exit;
 
 }
 
-require_once '../scripts/php/classes/databaseHandler.class.php';
-require_once '../scripts/php/classes/crud/questions.class.php';
+$questoion = new Questions();
 
-$handler 	= new Questions();
-// q = question
-$q_arr    = $handler -> getAll( $e_id );
+$questions = $questoion -> getAll( $e_id );
 
-$handler = null;
+$questoion = null;
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +56,7 @@ $handler = null;
 
   <main>
     <div>
-      <h2 title="<?php echo $e_name ?>"><b>Exam Name: </b><?php echo $e_name; ?></h2>
+      <h2 title="<?= $e_name ?>"><b>Exam Name: </b><?= $e_name; ?></h2>
     </div>
     <table>
       <caption>Exams</caption>
@@ -66,40 +65,39 @@ $handler = null;
           <td>Question</td>
           <td>Selections</td>
           <td>Answer</td>
-          <td>#</td>
-          <td>#</td>
+          <td colspan="2">Actions</td>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ( $q_arr as $value ) { 
+        <?php foreach ( $questions as $value ) { 
           // new line
           $delimiter  = '&#013;&#010;';
 
-          $question   = implode( $delimiter, explode( '\r\n', $value [1]) );
-          $selection  = implode( $delimiter, explode( '\r\n', $value [2]) );
-          $answer     = implode( $delimiter, explode( '\r\n', $value [3]) );
+          $question   = implode( $delimiter, explode( '\r\n', $value ['question']) );
+          $selection  = implode( $delimiter, explode( '\r\n', $value ['selections']) );
+          $answer     = implode( $delimiter, explode( '\r\n', $value ['answer']) );
         ?>
           <tr>
-            <td title="<?php echo $question; ?>">
+            <td title="<?= $question; ?>">
               <div>
-                <?php echo $question; ?> <!-- question -->
+                <?= $question; ?> <!-- question -->
               </div>
             </td>
-            <td title="<?php echo $selection; ?>">
+            <td title="<?= $selection; ?>">
               <div>
-                <?php echo $selection; ?> <!-- selections -->
+                <?= $selection; ?> <!-- selections -->
               </div>
             </td>
-            <td title="<?php echo $answer; ?>">
+            <td title="<?= $answer; ?>">
               <div>
-                <?php echo $answer; ?> <!-- answer -->
+                <?= $answer; ?> <!-- answer -->
               </div>
             </td>
             <td>
-              <a class="btn btn-success" href="./questionsForm.php?q_id=<?php echo $value [0]; ?>&q=<?php echo $value [1]; ?>&s=<?php echo $value [2]; ?>&an=<?php echo $value [3] ?>">Edit</a>
+              <a class="btn btn-success" href="./questionsForm.php?q_id=<?= $value ['q_id']; ?>">Edit</a>
             </td>
             <td>
-              <a class="btn btn-danger" href="../scripts/php/questionsAction.php?q_id=<?php echo $value [0];?>">Delete</a>
+              <a class="btn btn-danger" href="../scripts/php/questionsAction.php?q_id=<?= $value ['q_id'];?>&submit=Delete">Delete</a>
             </td>
           </tr>
         <?php } ?>
@@ -111,5 +109,6 @@ $handler = null;
 	<script type="text/javascript" src="../scripts/js/all.min.js"></script>
 
   <script type="text/javascript" src="../scripts/js/navbarGenerator.js"></script>
+  <script type="text/javascript" src="../scripts/js/tools.js"></script>
 </body>
 </html>

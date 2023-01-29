@@ -20,9 +20,9 @@ class Classifications extends MySQLHandler {
 
   }
 
-	public function getAll() {
+	public function getAll( $whereClause ) {
 
-    $this -> select( $this -> _table, "", "*", "c_id DESC");
+    $this -> select( $this -> _table, $whereClause, "*", "c_id DESC");
 
     return $this -> fetchAll();
 

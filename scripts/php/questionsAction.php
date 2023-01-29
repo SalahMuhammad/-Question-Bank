@@ -1,63 +1,57 @@
 <?php
 
-if ( $_SERVER['QUERY_STRING'] ) {
+require_once './myFunctions.php';
 
-  require_once './myFunctions.php';
+require_once './classes/database_config.php';
+require_once './classes/MySQLHandler.class.php';
+require_once './classes/crud/questions.class.php';
 
-  require_once './classes/databaseHandler.class.php';
-  require_once './classes/crud/questions.class.php';
+$question  = new Questions();
+$result = '';
 
-  $handler  = new Questions();
+if ( isset( $_GET ['e_id'] ) && ! empty( $_GET ['e_id'] ) ) {
+  echo json_encode( $question -> getSpecificColumns( $_GET ['e_id'] ) );
 
-  if ( isset( $_GET ['submit'] ) ) {
-
-    $regexp   = '/\r\n|\n|\r/';
-    $alt      = '\r\n';
-
-    @$q_id      = clean( $_GET ['q_id'] );
-    $question   = clean( $_GET ['q'] );
-    $selections = clean( $_GET ['s'] );
-    $answer     = clean( $_GET ['an'] );
-    $e_id       = clean( $_GET ['e_id']) ;
-
-    $question   = implode( $alt, preg_split( $regexp, $question ) );
-    $selections = implode( $alt, preg_split( $regexp, $selections ) );
-    $answer     = implode( $alt, preg_split( $regexp, $answer ) );
-
-    if ( $_GET ['submit'] == 'Save' ) {
-      // insert
-      // php_eol => end of line
-      $result = $handler -> insert( $question, $selections, $answer, $e_id );
-
-      header( 'Location: ../../app/questionsForm.php?status=' . $result );
-      exit;
-
-    } else if ( $_GET ['submit'] == 'Update' ) {
-      // upadte
-      $result = $handler -> update( $q_id, $question, $selections, $answer, $e_id );
-
-      header( 'Location: ../../app/questions.php?status=' . $result );
-      exit;
-
-    }
-
-  } else if ( isset( $_GET ['q_id'] ) ) {
-      // delete
-      $result = $handler -> delete( $_GET ['q_id'] );
-
-      header( 'Location: ../../app/questions.php?&status=' . $result );
-      exit;
-
-  }
-
-  $handler = null;
-
-  header( 'Location: ../../app/questions.php' );
-  exit;
-
-} else {
-
-  header( 'Location: ../../app/questions.php' );
+  // return ;
   exit;
 
 }
+
+if ( isset( $_GET ['submit'] ) ) {
+
+  $regexp       = '/\r\n|\n|\r/';
+  $alternative  = '\r\n';
+
+  $q_id       = isset( $_GET ['q_id'] ) ? clean( $_GET ['q_id'] ) : null;
+  $q          = isset( $_GET ['q'] )    ? clean( $_GET ['q'] )    : null;
+  $selections = isset( $_GET ['s'] )    ? clean( $_GET ['s'] )    : null;
+  $answer     = isset( $_GET ['an'] )   ? clean( $_GET ['an'] )   : null;
+  $e_id       = isset( $_GET ['e_id'] ) ? clean( $_GET ['e_id'] ) : null;
+
+  $q          = implode( $alternative, preg_split( $regexp, $q ) );
+  $selections = implode( $alternative, preg_split( $regexp, $selections ) );
+  $answer     = implode( $alternative, preg_split( $regexp, $answer ) );
+
+  switch ( $_GET ['submit'] ) {
+    case 'Save':
+      $result = $question -> insertQ( array( "q_id" => null, "question" => $q, "selections" => $selections, "answer" => $answer, "e_id" => $e_id ) );
+      break;
+
+    case 'Update':
+      $result = $question -> updateQ( array( "question" => $q, "selections" => $selections, "answer" => $answer, "e_id" => $e_id ), $q_id );
+      break;
+
+    case 'Delete':
+      $result = $question -> deleteQ( $q_id );
+      break;
+  }
+
+  $question = null;
+  header( 'Location: ../../app/questions.php?status=' . $result );
+  exit;
+
+}
+
+$question = null;
+header( 'Location: ../../app/questions.php' );
+exit;

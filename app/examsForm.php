@@ -1,13 +1,20 @@
 <?php
 
-require_once 'sessionInitializer.php';
+require_once 'config.php';
 
-// c = classification, e = exam
-@$c_id       = $_SESSION ['reference'] ['c_id'];
-$e_id       = isset( $_GET ['e_id'] )   ? $_GET ['e_id']    : null;
-$e_name     = isset( $_GET ['e_name'] ) ? $_GET ['e_name']  : null;
-$timer      = isset( $_GET ['timer'] )  ? $_GET ['timer']   : null;
-$case       = $e_id ? 'Update' : 'Save';
+require_once '../scripts/php/classes/crud/exams.class.php';
+
+@$c_id      = $_SESSION ['reference'] ['c_id'];
+$e_id       = isset( $_GET ['e_id'] ) ? $_GET ['e_id'] : 0;
+
+$exam = new Exams();
+
+$row = $exam -> getRow( $e_id );
+
+$e_name     = @$row ['e_name'];
+$timer      = @$row ['timer'];
+
+$exam = null;
 
 ?>
 <!DOCTYPE html>
@@ -18,39 +25,40 @@ $case       = $e_id ? 'Update' : 'Save';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exams Form</title>
   
-  <?php require_once './styleLinks.php'; ?>
+  <link rel="stylesheet" type="text/css" href="../styles/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../styles/formStyle.css">
 </head>
 <body>
 
-  <!-- alert -->
-	<?php require_once './alert.php'; ?>
-
   <main>
     <form action="../scripts/php/examsAction.php" methos="get">
       <!-- add hidden fields in case of update as references for examsAction.php -->
-      <?php if ( $case == 'Update' ) { ?>
-        <input type="hidden" name="e_id" value="<?php echo $e_id; ?>">
+      <?php if ( $e_id ) { ?>
+        <input type="hidden" name="e_id" value="<?= $e_id; ?>">
       <?php } ?>
 
       <div class="input-box">
-        <input id="c_id" type="text" name="c_id" value="<?php echo $c_id; ?>" required>
+        <input id="c_id" type="text" name="c_id" value="<?= $c_id; ?>" required>
         <label for="c_id">Classification ID</label>
       </div>
+
       <div class="input-box">
-        <input id="e_name" type="text" name="e_name" value="<?php echo $e_name; ?>" required autofocus>
+        <input id="e_name" type="text" name="e_name" value="<?= $e_name; ?>" required autofocus>
         <label for="e_name">Exam Name</label>
       </div>
+
       <div class="input-box">
-        <input id="timer" type="text" name="timer" value="<?php echo $timer; ?>" required>
+        <input id="timer" type="text" name="timer" value="<?= $timer; ?>" required>
         <label for="timer">Timer (Minutes) example => 3.4</label>
       </div>
 
       <a class="btn btn-primary" href="exams.php" >Back</a>
-      <input class="btn btn-success" type="submit" name="submit" value="<?php echo $case; ?>" >
+      <input class="btn btn-success" type="submit" name="submit" value="<?= $e_id ? 'Update' : 'Save'; ?>">
+
     </form>
   </main>
 
   <script type="text/javascript" src="../scripts/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
