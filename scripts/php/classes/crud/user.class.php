@@ -10,7 +10,7 @@ Class User extends MySQLHandler {
   }
 
 	public function getUser( $username, $password ) {
-    $this -> select( $this -> _table, "username = '$username' AND password = '$password'", "user_id, username" );
+    $this -> select( $this -> _table, "username = '$username' AND password = '$password'", "user_id, username, admin" );
 
     return $this -> fetch();
   }

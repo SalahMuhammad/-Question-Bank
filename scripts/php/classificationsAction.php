@@ -1,7 +1,8 @@
 <?php
+
 require_once './myFunctions.php';
 
-require_once './database_config.php';
+require_once './classes/database_config.php';
 require_once './classes/MySQLHandler.class.php';
 require_once './classes/crud/classifications.class.php';
 
@@ -27,6 +28,7 @@ if ( isset( $_GET ['submit'] ) ) {
       break;
   }
 
+  $classifications = null;
   header( 'Location: ../../app/classifications.php?status=' . $result );
   exit;
 

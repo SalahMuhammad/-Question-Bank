@@ -1,78 +1,67 @@
 <?php
 
-class Questions extends DatabaseHandler {
-	
-	function __construct() {
-		@$this -> dbConnection();
+class Questions extends MySQLHandler {
+
+	private $_table = 'questions';
+
+	public function __construct() {
+		global $config;
+
+		parent::__construct( $config );
 	}
 
-	public function getAll( $q_id ) {
-		try {
-			$query	= 'SELECT * FROM questions WHERE e_id = ? ORDER BY q_id DESC';
-			
-			$stmt	= $this -> con -> prepare( $query );
-			// $this -> con -> real_escape_string( $questions );
-			$stmt -> bind_param( 'i', $q_id );
-			$stmt -> execute();
+	public function getRow( $q_id ) {
+		$this -> select( $this -> _table, "q_id = $q_id", "question, selections, answer, e_id" );
 
-			return $stmt -> get_result() -> fetch_all();
-
-		} catch( Exception $e ) {
-			echo 'Failed To Load Data: ' . $e -> getMessage();
-		}
-
-		return [];
+		return $this -> fetch();
 	}
 
-	public function insert( $question, $selections, $answer, $e_id ) {
+	public function getSpecificColumns( $e_id ) {
+		$this -> select( $this -> _table, "e_id = $e_id", "question, answer", "q_id DESC" );
+
+		return $this -> fetchAll();
+	}
+
+	public function getAll( $e_id ) {
+		$this -> select( $this -> _table, "e_id = $e_id", "*", "q_id DESC");
+
+		return $this -> fetchAll();
+	}
+
+	public function insertQ( array $data ) {
 		try {
-			$query	= 'INSERT INTO questions VALUES ( null, ?, ?, ?, ? )';
-			
-			$stmt	= $this -> con -> prepare( $query );
-			$stmt -> bind_param( 'sssi', $question, $selections, $answer, $e_id );
-			$stmt -> execute();
 
-			return  'Question Inserted Successfully...';
+			return $this -> insert( $this -> _table, $data );
 
-		} catch( Exception $e ) {
+		} catch ( mysqli_sql_exception $e ) {
+
 			return 'Failed To Insert: ' . $e -> getMessage();
+
 		}
 	}
 
-	public function update( $q_id, $question, $selections, $answer, $e_id ) {
+	public function updateQ( array $data, $q_id ) {
 		try {
-			$query 	= 
-			'UPDATE questions SET 
-				question = ?, 
-				selections = ?, 
-				answer = ?, 
-				e_id = ? 
-			WHERE 
-				q_id = ?';
 
-			$stmt	= $this -> con -> prepare( $query );
-			$stmt -> bind_param( 'sssii', $question, $selections, $answer, $e_id, $q_id );
-			$stmt -> execute();
+			return $this -> update( $this -> _table, $data, "q_id = $q_id" );
 
-			return  'Question Updated Successfully...';
+		} catch ( mysqli_sql_exception $e ) {
 
-		} catch( Exception $e ) {
 			return 'Failed To Update: ' . $e -> getMessage();
+
 		}
 	}
 
-	public function delete( $q_id ) {
+	public function deleteQ( $q_id ) {
 		try {
-			$query	= 'DELETE FROM questions WHERE q_id = ?';
 
-			$stmt 	= $this -> con -> prepare( $query );
-			$stmt -> bind_param( 'i', $q_id );
-			$stmt -> execute();
+			return $this -> delete( $this -> _table, "q_id = $q_id" );
 
-			return 'Question Deleted Successfully...';
+		} catch ( mysqli_sql_exception $e ) {
 
-		} catch( Exception $e ) {
 			return 'Failed To Delete: ' . $e -> getMessage();
+
 		}
 	}
+
 }

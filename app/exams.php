@@ -1,6 +1,8 @@
 <?php
 
-require_once 'sessionInitializer.php';
+require_once 'config.php';
+
+require_once '../scripts/php/classes/crud/exams.class.php';
 
 if ( isset( $_GET ['c_id'] ) && isset( $_GET ['c_name'] ) ) {
 
@@ -19,14 +21,11 @@ if ( !$c_id || !$c_name ) {
 
 }
 
-require_once '../scripts/php/classes/databaseHandler.class.php';
-require_once '../scripts/php/classes/crud/exams.class.php';
+$exam = new Exams();
 
-$handler 	= new Exams();
-// e = exams, c = classification
-$e_arr 			= $handler -> getAll( $c_id );
+$exams = $exam -> getAll( $c_id );
 
-$handler = null;
+$exam = null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,11 +50,13 @@ $handler = null;
 
   <nav></nav>
   
-  <a class="new" href="examsForm.php"><i class="fa-solid fa-plus"></i></a>
+  <?php if ( $role ) { ?>
+    <a class="new" href="examsForm.php"><i class="fa-solid fa-plus"></i></a>
+  <?php } ?>
 
   <main>
     <div>
-      <h2 title="<?php echo $c_name ?>"><b>classification Name: </b><?php echo $c_name ?></h2>
+      <h2 title="<?= $c_name ?>"><b>classification Name: </b><?= $c_name ?></h2>
     </div>
     <table>
       <caption>Exams</caption>
@@ -63,27 +64,25 @@ $handler = null;
         <tr>
           <td>Exam Name</td>
           <td>Time(Minutes)</td>
-          <td>#</td>
-          <td>#</td>
+          <td colspan="3">Actions</td>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ( $e_arr as $value ) { ?>
+        <?php foreach ( $exams as $row ) { ?>
           <tr>
-            <td title="<?php echo $value [1]; ?>">
-              <a class="link" href="questions.php?e_id=<?php echo $value [0]; ?>&e_name=<?php echo $value [1]; ?>">
+            <td title="<?= $row ['e_name']; ?>">
+              <a class="link" href="questions.php?e_id=<?= $row ['e_id']; ?>&e_name=<?= $row ['e_name']; ?>">
                 <div>
-                  <?php echo $value [1]; ?> <!-- exam name -->
+                  <?= $row ['e_name']; ?>
                 </div>
               </a>
             </td>
-            <td><?php echo $value [2]; ?></td> <!-- time -->
-            <td>
-              <a class="btn btn-success" href="./examsForm.php?e_id=<?php echo $value [0]; ?>&e_name=<?php echo $value [1];?>&timer=<?php echo $value [2]; ?>">Edit</a>
-            </td>
-            <td>
-            <a class="btn btn-danger" href="../scripts/php/examsAction.php?e_id=<?php echo $value [0];?>&old_c_id=<?php echo $c_id; ?>&c_name=<?php echo $c_name; ?>">Delete</a>
-            </td>
+            <td><?= $row ['timer']; ?></td>
+            <td><a class="btn btn-primary" href="./exam.php?e_id=<?= $row ['e_id']; ?>&timer=<?= $row ['timer']; ?>">Enter</a></td>
+            <?php if ( $role ) { ?>
+              <td><a class="btn btn-success" href="./examsForm.php?e_id=<?= $row ['e_id']; ?>">Edit</a></td>
+              <td><a class="btn btn-danger" href="../scripts/php/examsAction.php?e_id=<?= $row ['e_id'];?>&submit=Delete">Delete</a></td>
+            <?php } ?>
           </tr>
         <?php } ?>
       </tbody>
@@ -94,6 +93,7 @@ $handler = null;
 	<script type="text/javascript" src="../scripts/js/all.min.js"></script>
 
   <script type="text/javascript" src="../scripts/js/navbarGenerator.js"></script>
+  <script type="text/javascript" src="../scripts/js/tools.js"></script>
   
 </body>
 </html>

@@ -1,16 +1,14 @@
 <?PHP
 
-require_once 'sessionInitializer.php';
+require_once 'config.php';
 
-require_once '../scripts/php/database_config.php';
-require_once '../scripts/php/classes/MySQLHandler.class.php';
 require_once '../scripts/php/classes/crud/classifications.class.php';
 
-$handler 	= new Classifications();
-// c is shortcut of classifications
-$c_arr 		= $handler -> getAll();
+$classification	= new Classifications();
 
-$handler = null;
+$classifications = $classification -> getAll( '' );
+
+$classification = null;
 
 ?>
 
@@ -36,19 +34,23 @@ $handler = null;
 
 	<nav></nav>
 
-	<a class="new" href="classificationsForm.php"><i class="fa-solid fa-plus"></i></a>
+	<?php if ( $role ) { ?>
+		<a class="new" href="classificationsForm.php"><i class="fa-solid fa-plus"></i></a>
+	<?php } ?>
 
 	<main>
 		<?php 
-		foreach ( $c_arr as $value ) { ?>
+		foreach ( $classifications as $row ) { ?>
 			<section>
-				<a href="./exams.php?c_id=<?= $value ['c_id'] ?>&c_name=<?= $value ['c_name']; ?>">
-					<h4 title="<?= $value ['c_name']; ?>"><?= $value ['c_name']; ?></h4>
+				<a href="./exams.php?c_id=<?= $row ['c_id'] ?>&c_name=<?= $row ['c_name']; ?>">
+					<h4 title="<?= $row ['c_name']; ?>"><?= $row ['c_name']; ?></h4>
 				</a>
-				<article>
-					<a class="btn btn-success" href="./classificationsForm.php?c_id=<?= $value ['c_id']; ?>">Edit</a>
-					<a class="btn btn-danger" href="../scripts/php/classificationsAction.php?submit=Delete&c_id=<?= $value ['c_id']; ?>">Delete</a>
-				</article>
+				<?php if ( $role ) { ?>
+					<article>
+						<a class="btn btn-success" href="./classificationsForm.php?c_id=<?= $row ['c_id']; ?>">Edit</a>
+						<a class="btn btn-danger" href="../scripts/php/classificationsAction.php?submit=Delete&c_id=<?= $row ['c_id']; ?>">Delete</a>
+					</article>
+				<?php } ?>
 			</section>
 		<?php } ?>
 	</main>
@@ -57,5 +59,7 @@ $handler = null;
 	<script type="text/javascript" src="../scripts/js/all.min.js"></script>
 
 	<script type="text/javascript" src="../scripts/js/navbarGenerator.js"></script>
+	<script type="text/javascript" src="../scripts/js/tools.js"></script>
+
 </body>
 </html>
