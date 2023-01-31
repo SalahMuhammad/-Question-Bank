@@ -2,7 +2,7 @@
 
 $config = array(
   'localhost',
-  'admin',
-  'admin',
+  'root',
+  '',
   'question_bank'
 );

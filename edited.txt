@@ -1,0 +1,18 @@
+[1] Edit Login.php (add style)
+[2] make login.scss in crud 
+[3] make login.css in crud 
+[4] add img in bg-01.jpg
+[5] add cairo font
+
+(Files Add) {
+    edited.txt
+    img/bg-01.jpg
+    styles/crud/login.css
+    styles/crud/login.scss
+    webfonts/Cairo-VariableFont_slnt,wght.ttf
+}
+(Edited Files) {
+    app/login.php
+    prepros.config
+    scripts/php/classes/database_config.php
+}
