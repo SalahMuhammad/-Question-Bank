@@ -5,10 +5,10 @@
 
 @font-face {
   font-family: font;
-  src: url(../../webfonts/Cairo-VariableFont_slnt\,wght.ttf);
+  src: url(../webfonts/Cairo-VariableFont_slnt\,wght.ttf);
 }
 body {
-  background-image: url("../../img/bg-01.jpg");
+  background-image: url("../img/bg-01.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   font-family: font;
