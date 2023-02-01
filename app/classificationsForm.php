@@ -40,13 +40,20 @@ $classifications = null;
         
       <?php } ?>
 
-      <div class="input-box">
-        <input id="c_name" type="text" name="c_name" value="<?= $c_name; ?>" required autofocus>
-        <label for="c_name">Classification Name</label>
+      <div class="box">
+        <div class="input-box">
+          <input id="c_name" type="text" name="c_name" value="<?= $c_name; ?>" required autofocus>
+          <label for="c_name">Classification Name</label>
+        </div>
       </div>
 
-      <a class="btn btn-primary" href="classifications.php">Back</a>
-      <input class="btn btn-success" type="submit" name="submit" value="<?= $c_id ? 'Update' : 'Save'; ?>">
+        <div class="box">
+          <a id="back" class="btn btn-primary" href="classifications.php">Back</a>
+            <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <input id="submit" class="btn btn-success" type="submit" name="submit" value="<?= $c_id ? 'Update' : 'Save'; ?>">
+          </div>
+        </div>
     </form>
   </main>
 

@@ -36,25 +36,33 @@ $exam = null;
       <?php if ( $e_id ) { ?>
         <input type="hidden" name="e_id" value="<?= $e_id; ?>">
       <?php } ?>
-
-      <div class="input-box">
-        <input id="c_id" type="text" name="c_id" value="<?= $c_id; ?>" required>
-        <label for="c_id">Classification ID</label>
+      <div class="box">
+        <div class="input-box">
+          <input id="c_id" type="text" name="c_id" value="<?= $c_id; ?>" required>
+          <label for="c_id">Classification ID</label>
+        </div>
+      </div>
+      <div class="box">
+        <div class="input-box">
+          <input id="e_name" type="text" name="e_name" value="<?= $e_name; ?>" required autofocus>
+          <label for="e_name">Exam Name</label>
+        </div>
       </div>
 
-      <div class="input-box">
-        <input id="e_name" type="text" name="e_name" value="<?= $e_name; ?>" required autofocus>
-        <label for="e_name">Exam Name</label>
+      <div class="box">
+        <div class="input-box">
+          <input id="timer" type="text" name="timer" value="<?= $timer; ?>" required>
+          <label for="timer">Timer (Minutes) example => 3.4</label>
+        </div>
       </div>
 
-      <div class="input-box">
-        <input id="timer" type="text" name="timer" value="<?= $timer; ?>" required>
-        <label for="timer">Timer (Minutes) example => 3.4</label>
+      <div class="box">
+        <a id="back" class="btn btn-primary" href="exams.php" >Back</a>
+        <div class="wrap-login100-form-btn">
+          <div class="login100-form-bgbtn"></div>
+          <input id="submit" class="btn btn-success" type="submit" name="submit" value="<?= $e_id ? 'Update' : 'Save'; ?>">
+        </div>
       </div>
-
-      <a class="btn btn-primary" href="exams.php" >Back</a>
-      <input class="btn btn-success" type="submit" name="submit" value="<?= $e_id ? 'Update' : 'Save'; ?>">
-
     </form>
   </main>
 
