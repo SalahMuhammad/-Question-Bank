@@ -21,11 +21,11 @@ $classification = null;
 
 	<?php require_once './styleLinks.php'; ?>
 
-	<link rel="stylesheet" type="text/css" href="../styles/crud/classifications.css">
 	<link rel="stylesheet" type="text/css" href="../styles/navbarStyle.css">
 	<link rel="stylesheet" type="text/css" href="../styles/common.css">
 
 	<link rel="stylesheet" type="text/css" href="../styles/all.min.css">
+	<link rel="stylesheet" type="text/css" href="../styles/crud/classifications.css">
 </head>
 <body>
 
@@ -35,14 +35,14 @@ $classification = null;
 	<nav></nav>
 
 	<?php if ( $role ) { ?>
-		<a class="new" href="classificationsForm.php"><i class="fa-solid fa-plus"></i></a>
+		<a class="new" href="classificationsForm.php"><i class="fa-solid fa-plus"></i> New</a>
 	<?php } ?>
 
 	<main>
 		<?php 
 		foreach ( $classifications as $row ) { ?>
 			<section>
-				<a href="./exams.php?c_id=<?= $row ['c_id'] ?>&c_name=<?= $row ['c_name']; ?>">
+				<a class="name" href="./exams.php?c_id=<?= $row ['c_id'] ?>&c_name=<?= $row ['c_name']; ?>">
 					<h4 title="<?= $row ['c_name']; ?>"><?= $row ['c_name']; ?></h4>
 				</a>
 				<?php if ( $role ) { ?>
@@ -52,6 +52,7 @@ $classification = null;
 					</article>
 				<?php } ?>
 			</section>
+			<!-- <hr> -->
 		<?php } ?>
 	</main>
 
