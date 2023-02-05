@@ -39,11 +39,11 @@ $questoion = null;
 
   <?php require_once './styleLinks.php'; ?>
 
-  <link rel="stylesheet" type="text/css" href="../styles/crud/questions.css">
 	<link rel="stylesheet" type="text/css" href="../styles/navbarStyle.css">
   <link rel="stylesheet" type="text/css" href="../styles/common.css">
 
   <link rel="stylesheet" type="text/css" href="../styles/all.min.css">
+  <link rel="stylesheet" type="text/css" href="../styles/crud/questions.css">
 </head>
 <body>
 
