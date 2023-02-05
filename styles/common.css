@@ -14,10 +14,3 @@ main {
   width: 80%;
   margin: 1rem auto;
 }
-
-.new {
-  position: absolute;
-  top: 5rem;
-  left: 0.5rem;
-  font-size: 2rem;
-}
