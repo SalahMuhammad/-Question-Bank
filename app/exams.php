@@ -37,11 +37,11 @@ $exam = null;
 
   <?php require_once './styleLinks.php'; ?>
 
-  <link rel="stylesheet" type="text/css" href="../styles/crud/exams.css">
 	<link rel="stylesheet" type="text/css" href="../styles/navbarStyle.css">
   <link rel="stylesheet" type="text/css" href="../styles/common.css">
 
   <link rel="stylesheet" type="text/css" href="../styles/all.min.css">
+  <link rel="stylesheet" type="text/css" href="../styles/crud/exams.css">
 </head>
 <body>
 
@@ -80,7 +80,7 @@ $exam = null;
             <td><?= $row ['timer']; ?></td>
             <td><a class="btn btn-primary" href="./exam.php?e_id=<?= $row ['e_id']; ?>&timer=<?= $row ['timer']; ?>">Enter</a></td>
             <?php if ( $role ) { ?>
-              <td><a class="btn btn-success" href="./examsForm.php?e_id=<?= $row ['e_id']; ?>">Edit</a></td>
+              <td><a class="btn btn-success " href="./examsForm.php?e_id=<?= $row ['e_id']; ?>">Edit</a></td>
               <td><a class="btn btn-danger" href="../scripts/php/examsAction.php?e_id=<?= $row ['e_id'];?>&submit=Delete">Delete</a></td>
             <?php } ?>
           </tr>
