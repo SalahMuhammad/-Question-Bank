@@ -1,36 +1,30 @@
-body {
-  background-color: #eaf3ff;
-}
-body main {
+main {
+  min-width: 360px;
   overflow: hidden;
-  width: 80%;
-  margin-left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
   overflow: hidden;
   background-color: white;
   border-radius: 10px;
-  padding: 10px;
-  margin-top: 30px;
   padding-top: 70px;
 }
-body main section {
+main section {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
       justify-content: space-around;
   cursor: pointer;
-  position: relative;
   margin-bottom: 15px;
   margin-top: 15px;
 }
-body main section:hover .name {
+main section:hover .name {
   color: black;
   font-weight: bold;
-  position: relative;
 }
-body main section .name {
+main section .name {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   width: 50%;
@@ -38,27 +32,26 @@ body main section .name {
   color: #707070;
   text-decoration: none;
 }
-body main section .btn {
+main section .btn {
   width: 150px;
-  -webkit-transition: 5px;
-  transition: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   font-weight: bold;
 }
-body main section .btn:hover {
+main section .btn:hover {
   background-color: rgb(170, 0, 0);
 }
-body main section .btn-success {
+main section .btn-success {
   background-color: rgb(0, 161, 102);
 }
-body main section .btn-success:hover {
+main section .btn-success:hover {
   background-color: rgb(0, 112, 71);
 }
-body .new {
+
+.new {
   display: block;
   position: absolute;
-  margin-top: 50px;
+  margin-top: 40px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -71,7 +64,7 @@ body .new {
   border-radius: 5px;
 }
 
-@media only screen and (max-width: 800px) {
+@media (max-width: 800px) {
   .btn {
     width: 100px !important;
   }

@@ -9,12 +9,15 @@ require_once './classes/crud/questions.class.php';
 $question  = new Questions();
 $result = '';
 
-if ( isset( $_GET ['e_id'] ) && ! empty( $_GET ['e_id'] ) ) {
-  echo json_encode( $question -> getSpecificColumns( $_GET ['e_id'] ) );
+if ( isset( $_GET ['e_id'] ) && ! empty( $_GET ['e_id'] ) && ! isset( $_GET ['submit'] ) ) {
+  $arr = $question -> getSpecificColumns( $_GET ['e_id'] );
 
-  // return ;
+  for ( $i = 0; $i < sizeof( $arr ); $i++ ) {
+    $arr [$i] ['question'] = spacesToCamelCase( $arr [$i] ['question'] );
+  }
+
+  echo json_encode( $arr );
   exit;
-
 }
 
 if ( isset( $_GET ['submit'] ) ) {

@@ -3,15 +3,20 @@ main div h2 {
   text-overflow: ellipsis;
 }
 
-body {
-  background-color: #eaf3ff;
-}
-
-.new {
-  position: absolute;
-  right: 100px;
-  top: 152px;
+.new svg {
   color: white;
+  margin-top: 10px;
+  margin-left: 13px;
+  padding: 15px;
+  width: 68px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #6c79e0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.new svg:hover {
+  background-color: #616dcd;
 }
 
 table {
@@ -43,6 +48,17 @@ table td .btn:active {
   -webkit-transform: translate(0px, 5px);
           transform: translate(0px, 5px);
   border-bottom: 1px solid;
+}
+table td .btn-primary {
+  background-color: #0d6efd;
+  border-bottom: 5px solid #0959d1;
+  text-shadow: 0px -2px #3083ff;
+}
+table td .btn-primary:active {
+  background-color: #0d6efd;
+}
+table td .btn-primary:hover {
+  background-color: #0d6efd;
 }
 table td .btn-danger {
   background-color: #dc3545;
@@ -107,22 +123,5 @@ table tbody tr td a div {
   }
   main table {
     width: 200%;
-  }
-  .new {
-    position: unset;
-  }
-  .new svg {
-    margin-top: 10px;
-    margin-left: 10px;
-    padding: 15px;
-    width: 68px;
-    text-align: center;
-    border-radius: 4px;
-    background-color: #6c79e0;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-  }
-  .new svg:hover {
-    background-color: #616dcd;
   }
 }

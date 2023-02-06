@@ -10,3 +10,13 @@
 function clean( $str ) {
   return trim( filter_var( $str, FILTER_SANITIZE_STRING ) );
 }
+
+function spacesToCamelCase( $string, $capitalizeFirstCharacter = false ) {
+  $str = str_replace(' ', '', ucwords($string));
+
+  if ( ! $capitalizeFirstCharacter ) {
+    $str[0] = strtolower($str[0]);
+  }
+
+  return $str;
+}

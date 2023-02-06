@@ -4,8 +4,6 @@
 nav {
   min-height: 5rem;
   padding: 0 .7rem;
-  display: flex;
-  align-items: center;
   background-color: #7b2aff;
   @include customDisplay( flex, space-between, center );
   gap: 2rem;

@@ -41,7 +41,7 @@ $exam = null;
   <link rel="stylesheet" type="text/css" href="../styles/common.css">
 
   <link rel="stylesheet" type="text/css" href="../styles/all.min.css">
-  <link rel="stylesheet" type="text/css" href="../styles/crud/exams.css">
+  <link rel="stylesheet" type="text/css" href="../styles/tableStyle.css">
 </head>
 <body>
 

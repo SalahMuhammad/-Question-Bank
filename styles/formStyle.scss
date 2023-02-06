@@ -38,6 +38,10 @@ main {
     min-height: 100vh;
     .input-box {
       position: relative;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: white;
+      padding-bottom: 0px;
       input, textarea {
         width: 100%;
         margin-bottom: 20px;
@@ -76,7 +80,7 @@ main {
       }
       span, label {
         position: absolute;
-        left: 0;
+        left: 20px;
         padding: 0.6rem;
         pointer-events: none;
         color: rgba(0, 0, 0, 0.45);
@@ -84,13 +88,6 @@ main {
         transition: 0.5s;
       }
     }
-    .box {
-      padding: 20px;
-      border-radius: 5px;
-      background-color: white;
-      padding-bottom: 0px;
-    }
-
     #submit {
       font-family: Poppins-Medium;
       font-size: 16px;

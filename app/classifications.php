@@ -52,7 +52,6 @@ $classification = null;
 					</article>
 				<?php } ?>
 			</section>
-			<!-- <hr> -->
 		<?php } ?>
 	</main>
 
