@@ -24,7 +24,7 @@ $role = @$_SESSION ['user_data'] ['admin'];
   
   <div class="action">
     <div class="profile" onclick="menuToggle();">
-      <img src="../img/images (1).jpeg" alt="">
+      <img src="../img/user.png" alt="">
     </div>
     <div class="menu">
       <!-- <h3>Some Famous<br><span>Website Designer</span></h3> -->

@@ -3,26 +3,137 @@ main div h2 {
   text-overflow: ellipsis;
 }
 
+body {
+  background-color: #eaf3ff;
+}
+
+.new {
+  position: absolute;
+  right: 100px;
+  top: 152px;
+  color: white;
+}
+
 table {
   width: 100%;
+  border-radius: 13px;
+  overflow: hidden;
   border-spacing: 31px;
 }
 table td {
   padding: 0.5rem 0.3rem;
-  background-color: #EEE;
+  background-color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   text-align: center;
 }
+table td .btn {
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  position: relative;
+  padding: 5px 20px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 3px;
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+  color: #FFF;
+  text-decoration: none;
+}
+table td .btn:active {
+  -webkit-transform: translate(0px, 5px);
+          transform: translate(0px, 5px);
+  border-bottom: 1px solid;
+}
+table td .btn-primary {
+  background-color: #0d6efd;
+  border-bottom: 5px solid #0959d1;
+  text-shadow: 0px -2px #3083ff;
+}
+table td .btn-primary:active {
+  background-color: #0d6efd;
+}
+table td .btn-primary:hover {
+  background-color: #0d6efd;
+}
+table td .btn-danger {
+  background-color: #dc3545;
+  border-bottom: 5px solid #ab2936;
+  text-shadow: 0px -2px #fe5667;
+}
+table td .btn-danger:active {
+  background-color: #0d6efd;
+}
+table td .btn-danger:hover {
+  background-color: #dc3545;
+}
+table td .btn-success {
+  background-color: #20c997;
+  border-bottom: 5px solid #19ab7f;
+  text-shadow: 0px -2px #27dca6;
+}
+table td .btn-success:active {
+  background-color: #20c997;
+}
+table td .btn-success:hover {
+  background-color: #20c997;
+}
+table thead {
+  height: 50px;
+}
 table thead tr td {
-  background-color: rgb(0, 95, 95);
+  background-color: #6c79e0;
   color: white;
   font-weight: bold;
+}
+table tbody tr {
+  border-top: rgb(219, 219, 219) solid 1px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  cursor: pointer;
+}
+table tbody tr:hover td {
+  background-color: #edecff;
 }
 table tbody tr td a {
   text-decoration: none;
   color: #000;
 }
+table tbody tr td a:hover {
+  color: unset;
+}
 table tbody tr td a div {
   max-width: 400px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 800px) {
+  main {
+    width: calc(100% - 10px);
+    overflow: auto;
+    margin-left: 10px;
+  }
+  main h2 {
+    width: 200%;
+  }
+  main table {
+    width: 200%;
+  }
+  .new {
+    position: unset;
+  }
+  .new svg {
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 15px;
+    width: 68px;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #6c79e0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  .new svg:hover {
+    background-color: #616dcd;
+  }
 }
