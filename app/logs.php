@@ -20,6 +20,8 @@ $rows = $logs -> getAll( "exams.e_name = '$e_name' AND user_id = $user_id" );
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logs</title>
 
+  <link rel="stylesheet" type="text/css" href="../styles/all.min.css">
+
   <link rel="stylesheet" type="text/css" href="../styles/navbarStyle.css">
 	<link rel="stylesheet" type="text/css" href="../styles/common.css">
   <link rel="stylesheet" type="text/css" href="../styles/tableStyle.css">
@@ -70,6 +72,8 @@ $rows = $logs -> getAll( "exams.e_name = '$e_name' AND user_id = $user_id" );
 
   <script type="text/javascript" src="../scripts/js/navbarGenerator.js"></script>
 	<script type="text/javascript" src="../scripts/js/tools.js"></script>
+
+  <script type="text/javascript" src="../scripts/js/all.min.js"></script>
 
 </body>
 </html>
