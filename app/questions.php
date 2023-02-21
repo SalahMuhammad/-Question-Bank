@@ -14,7 +14,7 @@ if ( isset( $_GET ['e_id'] ) && isset( $_GET ['e_name'] ) ) {
 $e_id   = @$_SESSION ['reference'] ['e_id'];
 $e_name = @$_SESSION ['reference'] ['e_name'];
 
-if( ! $e_id || ! $e_name ) {
+if( ! $e_id || ! $e_name || ! $_SESSION ['user_data'] ['admin'] ) {
 
   header( 'Location: ./exams.php');
   exit;
@@ -69,28 +69,21 @@ $questoion = null;
         </tr>
       </thead>
       <tbody>
-        <?php foreach ( $questions as $value ) { 
-          // new line
-          $delimiter  = '&#013;&#010;';
-
-          $question   = implode( $delimiter, explode( '\r\n', $value ['question']) );
-          $selection  = implode( $delimiter, explode( '\r\n', $value ['selections']) );
-          $answer     = implode( $delimiter, explode( '\r\n', $value ['answer']) );
-        ?>
+        <?php foreach ( $questions as $value ) { ?>
           <tr>
-            <td title="<?= $question; ?>">
+            <td title="<?= $value ['question']; ?>">
               <div>
-                <?= $question; ?> <!-- question -->
+                <?= $value ['question']; ?>
               </div>
             </td>
-            <td title="<?= $selection; ?>">
+            <td title="<?= $value ['selections']; ?>">
               <div>
-                <?= $selection; ?> <!-- selections -->
+                <?= $value ['selections']; ?>
               </div>
             </td>
-            <td title="<?= $answer; ?>">
+            <td title="<?= $value ['answer']; ?>">
               <div>
-                <?= $answer; ?> <!-- answer -->
+                <?= $value ['answer']; ?>
               </div>
             </td>
             <td>

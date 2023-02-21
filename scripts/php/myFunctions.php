@@ -8,7 +8,7 @@
  * @return string after cleaning
  */
 function clean( $str ) {
-  return trim( filter_var( $str, FILTER_SANITIZE_STRING ) );
+  return trim( filter_var( $str, FILTER_SANITIZE_SPECIAL_CHARS ) );
 }
 
 function spacesToCamelCase( $string, $capitalizeFirstCharacter = false ) {

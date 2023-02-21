@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+
+if ( ! $_SESSION ['user_data'] ['admin'] ) header( 'Location: ../../app/login.php');
+
 require_once './myFunctions.php';
 
 require_once './classes/database_config.php';
@@ -11,18 +15,18 @@ $result = '';
 
 if ( isset( $_GET ['submit'] ) ) {
 
-  $e_id   = isset( $_GET ['e_id'] )   ? clean( $_GET ['e_id'] )   : null;
-  $e_name = isset( $_GET ['e_name'] ) ? clean( $_GET ['e_name'] ) : null;
-  $timer  = isset( $_GET ['timer'] )  ? clean( number_format( $_GET ['timer'], 1 ) ) : null;
-  $c_id   = isset( $_GET ['c_id'] )   ? clean( $_GET ['c_id'] )   : null;
+  $e_id   = isset( $_GET ['e_id'] )   ? clean( $_GET ['e_id'] )      : null;
+  $e_name = isset( $_GET ['e_name'] ) ? clean( $_GET ['e_name'] )    : null;
+  $secs   = isset( $_GET ['time'] )   ? clean( $_GET ['time'] * 60 ) : null;
+  $c_id   = isset( $_GET ['c_id'] )   ? clean( $_GET ['c_id'] )      : null;
 
   switch ( $_GET ['submit'] ) {
     case 'Save':
-      $result = $exam -> insertE( array( "e_id" => null, "e_name" => $e_name, "timer" => $timer, "c_id" => $c_id ) );
+      $result = $exam -> insertE( array( "e_id" => null, "e_name" => $e_name, "secs" => $secs, "c_id" => $c_id ) );
       break;
 
     case 'Update':
-      $result = $exam -> updateE( array( "e_name" => $e_name, "timer" => $timer, "c_id" => $c_id ), $e_id );
+      $result = $exam -> updateE( array( "e_name" => $e_name, "secs" => $secs, "c_id" => $c_id ), $e_id );
       break;
 
     case 'Delete':

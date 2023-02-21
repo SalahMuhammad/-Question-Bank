@@ -4,18 +4,11 @@ require_once './config.php';
 
 require_once '../scripts/php/classes/crud/questions.class.php';
 
-$e_id   = isset( $_GET ['e_id'] )   ? $_GET ['e_id']  : 0;
-$timer  = isset( $_GET ['timer'] )  ? $_GET ['timer'] : 0;
+$e_id   = isset( $_GET ['e_id'] ) ? $_GET ['e_id'] : 0;
+$secs   = isset( $_GET ['secs'] ) ? $_GET ['secs'] : 0;
 
-$min = floor( $timer );
-$sec = ( $timer - $min ) * 60;
-
-if ( isset( $_GET ['submit'] ) && ( ! $e_id || ! $timer ) ) {
-
-  header( 'Location: ./classifications.php' );
-  exit;
-
-}
+$seconds = $secs % 60;
+$minutes = ( $secs - $seconds ) / 60;
 
 $question = new Questions();
 
@@ -42,59 +35,59 @@ $question = null;
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-
-  <style>
-    .true {
-      background-color: green;
-    }
-    .false {
-      background-color: red;
-    }
-  </style>
+  
+  <link rel="stylesheet" href="../styles/exam.css">
 
 </head>
 <body>
 
   <nav></nav>
 
+  <div class="popup">
+    <h4 class="duration"></h4>
+    <h4 class="degree"></h4>
+  </div>
+
+  <div class="overlay"></div>
+
+  <a class="back-btn" href="./exams.php">Back</a>
+
   <div>
-    <span class="minutes"><?= $min < 10 ? 0 . $min : $min; ?></span>
+    <span class="minutes"><?= $minutes < 10 ? 0 . $minutes : $minutes ?></span>
     :
-    <span class="seconds"><?= $sec < 10 ? 0 . $sec : $sec; ?></span>
+    <span class="seconds"><?= $seconds < 10 ? 0 . $seconds : $seconds; ?></span>
   </div>
 
   <main>
 
-    <form action="" method="get">
-
-      <?php 
-      $i = 1;
-      shuffle( $questions );
-      foreach ( $questions as $row ) { 
-        $selections   = explode( '\r\n', $row ['selections'] );
-        $selections[] = str_replace( '\r\n', ' ', $row ['answer'] );
-        shuffle( $selections ); ?>
-        <div>
-          <p><?= implode( '<br>', explode( '\r\n', $row ['question'] ) ); ?></p>
-          <div class="q">
-            <?php foreach ( $selections as $selection ) { ?>
-              <input type="radio" id="<?= $i; ?>" name="<?= str_replace( '\r\n', '', $row ['question'] ); ?>" value="<?= $selection; ?>" checked>
+    <?php 
+    $i = 1;
+    shuffle( $questions );
+    foreach ( $questions as $row ) { 
+      $selections   = explode( '&#13;&#10;', $row ['selections'] );
+      $selections[] = str_replace( '&#13;&#10;', ' ', $row ['answer'] );
+      shuffle( $selections ); ?>
+      <div>
+        <p><?= str_replace( '&#13;&#10;', '<br>', $row ['question'] ); ?></p>
+        <div class="selections">
+          <?php foreach ( $selections as $selection ) { ?>
+            <div class="input-box">
+              <input type="radio" id="<?= $i; ?>" name="<?= preg_replace( '/&#13;&#10;|\s/', '', $row ['question'] ); ?>" value="<?= preg_replace( '/\s/', '', $selection ); ?>">
               <label for="<?= $i; ?>"><?= $selection; ?></label>
-            <?php $i+=1; } ?>
-          </div>
+            </div>
+          <?php $i+=1; } ?>
         </div>
-      <?php } ?>
+      </div>
+    <?php } ?>
 
-      <input type="submit" name="submit" value="Submit">
-
-    </form>
+    <input type="submit" name="submit" value="Submit">
 
   </main>
 
   <script type="text/javascript" src="../scripts/js/navbarGenerator.js"></script>
 	<script type="text/javascript" src="../scripts/js/tools.js"></script>
 
-  <script type="text/javascript" src="../scripts/js/exam.js"></script>
+  <script type="module" src="../scripts/js/exam.js"></script>
 
 </body>
 </html>

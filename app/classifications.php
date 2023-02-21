@@ -34,7 +34,7 @@ $classification = null;
 
 	<nav></nav>
 
-	<?php if ( $role ) { ?>
+	<?php if ( $_SESSION ['user_data'] ['admin'] ) { ?>
 		<a class="new" href="classificationsForm.php"><i class="fa-solid fa-plus"></i> New</a>
 	<?php } ?>
 
@@ -45,7 +45,7 @@ $classification = null;
 				<a class="name" href="./exams.php?c_id=<?= $row ['c_id'] ?>&c_name=<?= $row ['c_name']; ?>">
 					<h4 title="<?= $row ['c_name']; ?>"><?= $row ['c_name']; ?></h4>
 				</a>
-				<?php if ( $role ) { ?>
+				<?php if ( $_SESSION ['user_data'] ['admin'] ) { ?>
 					<article>
 						<a class="btn btn-success" href="./classificationsForm.php?c_id=<?= $row ['c_id']; ?>">Edit</a>
 						<a class="btn btn-danger" href="../scripts/php/classificationsAction.php?submit=Delete&c_id=<?= $row ['c_id']; ?>">Delete</a>

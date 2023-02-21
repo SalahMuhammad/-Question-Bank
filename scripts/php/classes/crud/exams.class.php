@@ -14,7 +14,7 @@ class Exams extends MySQLHandler {
 
 	public function getRow( $e_id ) {
 
-		$this -> select( $this -> _table, "e_id = $e_id", "e_name, timer, c_id" );
+		$this -> select( $this -> _table, "e_id = $e_id", "e_name, secs, c_id" );
 
 		return $this -> fetch();
 

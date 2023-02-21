@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+
+if ( ! $_SESSION ['user_data'] ['admin'] ) header( 'Location: ../../app/login.php');
+
 require_once './myFunctions.php';
 
 require_once './classes/database_config.php';

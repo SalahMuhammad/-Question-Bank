@@ -1,0 +1,64 @@
+.true {
+  background-color: green;
+}
+.false {
+  background-color: red;
+}
+.selections .right {
+  background-color: #998000;
+}
+
+label {
+  padding-right: 70%;
+}
+
+.popup {
+  background-color: blue;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  padding: 3rem;
+  z-index: 1;
+  display: none;
+  h4 {
+    padding: .5rem;
+  }
+  &.active {
+    display: inline;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  display: none;
+  &.active {
+    display: inline;
+  }
+}
+
+.back-btn {
+  position: absolute;
+  top: 6rem;
+  right: 1rem;
+  padding: .5rem .5rem;
+  text-decoration: none;
+  background-color: rgb(45, 45, 211);
+  transition: .5s;
+  display: none;
+  &:hover {
+    background-color: blue;
+  }
+  &.active {
+    display: inline;
+  }
+}
+
+body {
+  height: 1000vh;
+}

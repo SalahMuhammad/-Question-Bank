@@ -29,7 +29,7 @@ $role = @$_SESSION ['user_data'] ['admin'];
     <div class="menu">
       <!-- <h3>Some Famous<br><span>Website Designer</span></h3> -->
       <ul>
-        <li><i class="fa-solid fa-user"></i><a>My Profile</a></li>
+        <li><i class="fa-solid fa-folder-closed"></i><a href="logs.php">Logs</a></li>
         <li><i class="fa-solid fa-right-from-bracket"></i><a href="../scripts/php/logoutAction.php">Logout</a></li>
       </ul>
     </div>

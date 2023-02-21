@@ -4,6 +4,11 @@ require_once 'config.php';
 
 require_once '../scripts/php/classes/crud/classifications.class.php';
 
+if ( ! $_SESSION ['user_data'] ['admin'] ) {
+  header( 'Location: ./classifications.php' );
+  exit;
+}
+
 $c_id = isset( $_GET ['c_id'] ) ? $_GET ['c_id'] : 0;
 
 $classifications = new Classifications();
@@ -13,7 +18,6 @@ $row = $classifications -> getRow( $c_id );
 $c_name = @$row ['c_name' ];
 
 $classifications = null;
-
 ?>
 
 <!DOCTYPE html>

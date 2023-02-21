@@ -4,6 +4,11 @@ require_once 'config.php';
 
 require_once '../scripts/php/classes/crud/exams.class.php';
 
+if ( ! $_SESSION ['user_data'] ['admin'] ) {
+  header( 'Location: ./exams.php' );
+  exit;
+}
+
 @$c_id      = $_SESSION ['reference'] ['c_id'];
 $e_id       = isset( $_GET ['e_id'] ) ? $_GET ['e_id'] : 0;
 
@@ -12,7 +17,7 @@ $exam = new Exams();
 $row = $exam -> getRow( $e_id );
 
 $e_name     = @$row ['e_name'];
-$timer      = @$row ['timer'];
+$secs      = @$row ['secs'];
 
 $exam = null;
 
@@ -48,8 +53,8 @@ $exam = null;
       </div>
 
       <div class="input-box">
-        <input id="timer" type="text" name="timer" value="<?= $timer; ?>" required>
-        <label for="timer">Timer (Minutes) example => 3.4</label>
+        <input id="secs" type="text" name="time" value="<?= $secs / 60; ?>" required>
+        <label for="secs">Timer (Minutes) example => 3.4</label>
       </div>
 
       <div class="input-box">

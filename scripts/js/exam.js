@@ -1,68 +1,154 @@
-let cookies = document.cookie.split( ';' );
-let data    = cookies [0].includes( 'data' ) ? cookies [0].split( '=' ) [1] : cookies [1].split( '=' ) [1];
+import { sendGetXHR } from "./myFunctions.js";
 
-data = JSON.parse ( decodeURIComponent( data ) );
+window.addEventListener( 'load', ( e ) => {
+  // data consists of array of objects each object contains questions, answers, selections
+  let data = decodeURIComponent( 
+    document
+    .cookie
+    .split( ';' )
+    .map( ( val ) => {
+      if ( val.includes( 'data=' ) )
+        return val.slice( 5 )
+    } ) [0]
+  );
 
-console.log( data );
+  data = JSON.parse( data );
 
-let minutes = document.querySelector( '.minutes' );
-let seconds = document.querySelector( '.seconds' );
-let form    = document.querySelector( 'form' );
+  let submit  = document.querySelector( 'input[type="submit"]');
 
-let min = minutes.innerText;
-let sec = seconds.innerText;
-min = 0;
-sec = 1;
-let handler = setInterval(() => {
-  sec--;
+  let popup   = document.querySelector( '.popup' );
 
-  if ( sec < 0 && min >= 1 ) {
-    sec = 59;
-    min--;
-  }
+  let minutes = document.querySelector( '.minutes' );
+  let seconds = document.querySelector( '.seconds' );
+  let min = parseInt( minutes.innerText );
+  let sec = parseInt( seconds.innerText );
 
-  minutes.innerText = min < 10 ? '0' + min : min;
-  seconds.innerText = sec < 10 ? '0' + sec : sec;
+  let startupTime = Date.now();
 
-  if ( sec <= 0 && min === 0 ) {
-    clearInterval( handler );
-  }
+  let params = [];
+  let queryStringParameters = window.location.search.split( /\?|&/ );
 
-}, 1000);
+  params.push( ...queryStringParameters.filter( ( val ) => val.includes( 'e_id=' ) ) ); // get e_id from query string parameters
 
-setTimeout(() => {
-  let q = document.querySelectorAll( `input:checked` );
+  submit.addEventListener( 'click', ( e ) => {
+    timeoutAction( interval, submit, data, params, startupTime, popup );
 
-// console.log( q[0] .name)
-// console.log( data [5].question)
-
-// console.log( data )
-// console.log( a );
-console.log( data[5].question)
-  q.forEach( ( elem ) => {
-    // console.log( elem.name )
-    let obj = data.filter( ( val ) => val.question.replace( /\\r\\n/g, '' ) === elem ['name'] ) [0];
-
-    console.log( obj  )
-    // if ( elem.value === obj.answer ) {
-    //   elem.classList.add( 'true' );
-    // } else {
-    //   elem.classList.add( 'false' );
-    // }
+    sendData( params.join( '&' ) );
   });
-  // sendGetXHR( 'questionsAction.php', 'e_id=<?= $e_id; ?>', ( res ) => {
 
-  //   let arr = JSON.parse( res );
+  let interval = setInterval( () => {
+    sec--;
+  
+    if ( sec < 0 && min >= 1 ) {
+      sec = 59;
+      min--;
+    }
+  
+    minutes.innerText = min < 10 ? '0' + min : min;
+    seconds.innerText = sec < 10 ? '0' + sec : sec;
 
-  //   let a = document.querySelectorAll( `[type=radio]:checked` );
-  //   console.log( a[0] )
-  //   arr.forEach( ( obj ) => {
-  //   });
+    if ( sec <= 0 && min === 0 ) {
+      timeoutAction( interval, submit, data, params, startupTime, popup );
 
-  //   console.log( 'hi' + "&#160;" );
+      sendData( params.join( '&' ) );
+    }
 
-    
+  }, 1000);
+});
 
-  // } );
+/**
+ * 
+ * @param { interval_to_clear } interval 
+ * @param { btn_to_disable } btn 
+ * @param { obj_to_mark_answers } data 
+ * @param { arrayOfParamsToPathToExamActionToAddLogs } valuesArr
+ */
+function timeoutAction( interval, btn, data, valuesArr, startupTime, popup ) {
+  let duration_by_secs  = ( ( Date.now() - startupTime ) / 1000 ).toFixed( 2 );
 
-}, ( ( parseInt( min ) * 60 + parseInt( sec ) ) * 1000 ) );
+  clearInterval( interval );
+
+  btn.remove();
+
+  let correctAnswers  = markAnswers( data );
+  let percentage      = ( correctAnswers / data.length * 100 ).toFixed( 2 );  // calculate percentage
+
+  popupInitializer( popup, duration_by_secs, percentage );
+
+  valuesArr.push( 'percentage=' + percentage );
+  valuesArr.push( 'duration_by_secs=' + duration_by_secs );
+
+  backBTN();
+}
+
+function popupInitializer( popup, duration_by_secs, percentage ) {
+  let durationElem = popup.children[0];
+  let degreeElem   = popup.children[1];
+
+  let secs  = duration_by_secs % 60;
+  let min   = ( duration_by_secs - secs ) / 60;
+
+  durationElem.innerText = `Duration: ${ min < 10 ? '0' + min : min } : ${ secs < 10 ? '0' + secs : secs } `;
+  degreeElem.innerText   = `Degree: ${ percentage }%`;
+
+  popup.classList.toggle( 'active' );
+
+  overlayInitializer( popup );
+}
+
+function overlayInitializer( popup ) {
+  let overlay = document.querySelector( '.overlay' );
+  overlay.classList.toggle( 'active' );
+
+  overlay.addEventListener( 'click', ( e ) => {
+    overlay.classList.toggle( 'active' );
+    popup.classList.toggle( 'active' );
+  } );
+}
+
+function backBTN() {
+  let backBTN = document.querySelector( '.back-btn' );
+
+  backBTN.classList.toggle( 'active' );
+}
+
+/**
+ * 
+ * @param { Array } arryOfObjectsThatContainingQuestionsAndAnswer Array
+ * @return { number_of_correct_Answers} int
+ */
+function markAnswers( arr ) {
+  let i = 0;
+  arr.map( ( obj ) => {
+    let elem = document.querySelector( `input[name='${ obj ['question'].replace( /&#13;&#10;|\s/g, '' ) }']:checked` );
+
+    if ( elem ) {
+
+      if ( elem.value == obj ['answer'].replace( /&#13;&#10;|\s/g, '' ) ) {
+
+        elem.parentElement.classList.add( 'true' );
+        i++;
+        
+      } else {
+
+        elem.parentElement.classList.add( 'false' );
+
+        document
+        .querySelector( `input[name='${ obj ['question'].replace( /&#13;&#10;|\s/g, '' ) }'][value='${ obj ['answer'].replace( /&#13;&#10;|\s/g, '' ) }'`)
+        .parentElement
+        .classList
+        .add( 'right' );
+
+      }
+
+    }
+
+  } );
+
+  return i;
+}
+
+function sendData( queryStringParams ) {
+  sendGetXHR( 'logsAction.php', queryStringParams, ( res ) => {
+  } );
+}

@@ -4,6 +4,11 @@ require_once 'config.php';
 
 require_once '../scripts/php/classes/crud/questions.class.php';
 
+if ( ! $_SESSION ['user_data'] ['admin'] ) {
+  header( 'Location: ./classifications.php' );
+  exit;
+}
+
 $q_id = isset( $_GET ['q_id'] ) ? $_GET ['q_id']  : 0;
 
 $question   = null;
@@ -17,9 +22,9 @@ if ( $q_id ) {
   
   $row = $questions -> getRow( $q_id );
 
-  $question   = implode( '&#013;&#010;', explode( '\r\n', $row ['question'] ) );
-  $selections = implode( '&#013;&#010;', explode( '\r\n', $row ['selections'] ) );
-  $answer     = implode( '&#013;&#010;', explode( '\r\n', $row ['answer'] ) );
+  $question   = $row ['question'];
+  $selections = $row ['selections'];
+  $answer     = $row ['answer'];
 
   $questions = null;
 }

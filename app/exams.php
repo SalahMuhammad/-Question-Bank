@@ -50,7 +50,7 @@ $exam = null;
 
   <nav></nav>
   
-  <?php if ( $role ) { ?>
+  <?php if ( $_SESSION ['user_data'] ['admin'] ) { ?>
     <a class="new" href="examsForm.php"><i class="fa-solid fa-plus"></i></a>
   <?php } ?>
 
@@ -77,9 +77,9 @@ $exam = null;
                 </div>
               </a>
             </td>
-            <td><?= $row ['timer']; ?></td>
-            <td><a class="btn btn-primary" href="./exam.php?e_id=<?= $row ['e_id']; ?>&timer=<?= $row ['timer']; ?>">Enter</a></td>
-            <?php if ( $role ) { ?>
+            <td><?= $row ['secs'] / 60; ?></td>
+            <td><a class="btn btn-primary" href="./exam.php?e_id=<?= $row ['e_id']; ?>&secs=<?= $row ['secs']; ?>">Enter</a></td>
+            <?php if ( $_SESSION ['user_data'] ['admin'] ) { ?>
               <td><a class="btn btn-success " href="./examsForm.php?e_id=<?= $row ['e_id']; ?>">Edit</a></td>
               <td><a class="btn btn-danger" href="../scripts/php/examsAction.php?e_id=<?= $row ['e_id'];?>&submit=Delete">Delete</a></td>
             <?php } ?>
