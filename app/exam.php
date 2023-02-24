@@ -31,7 +31,7 @@ $question = null;
 
   <link rel="stylesheet" type="text/css" href="../styles/navbarStyle.css">
   <link rel="stylesheet" type="text/css" href="../styles/common.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -52,14 +52,14 @@ $question = null;
 
   <a class="back-btn" href="./exams.php">Back</a>
 
-  <div>
+  <div id="timer">
     <span class="minutes"><?= $minutes < 10 ? 0 . $minutes : $minutes ?></span>
     :
     <span class="seconds"><?= $seconds < 10 ? 0 . $seconds : $seconds; ?></span>
   </div>
 
   <main>
-
+    <p id="topBanle"><i class="fa-solid fa-square-check"></i> Choose correct answers:</p>
     <?php 
     $i = 1;
     shuffle( $questions );
@@ -67,11 +67,11 @@ $question = null;
       $selections   = explode( '&#13;&#10;', $row ['selections'] );
       $selections[] = str_replace( '&#13;&#10;', ' ', $row ['answer'] );
       shuffle( $selections ); ?>
-      <div>
+      <div class="q">
         <p><?= str_replace( '&#13;&#10;', '<br>', $row ['question'] ); ?></p>
         <div class="selections">
           <?php foreach ( $selections as $selection ) { ?>
-            <div class="input-box">
+            <div class="input-box box">
               <input type="radio" id="<?= $i; ?>" name="<?= preg_replace( '/&#13;&#10;|\s/', '', $row ['question'] ); ?>" value="<?= preg_replace( '/\s/', '', $selection ); ?>">
               <label for="<?= $i; ?>"><?= $selection; ?></label>
             </div>
@@ -80,7 +80,10 @@ $question = null;
       </div>
     <?php } ?>
 
-    <input type="submit" name="submit" value="Submit">
+    <div class="wrap-login100-form-btn">
+      <div class="login100-form-bgbtn"></div>
+      <input id="submit" type="submit" name="submit" value="Submit">
+    </div>
 
   </main>
 
