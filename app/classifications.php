@@ -10,6 +10,8 @@ $classifications = $classification -> getAll( '' );
 
 $classification = null;
 
+$user_style = isset( $_SESSION ['user-data'] ['admin'] ) && $_SESSION ['user-data'] ['admin'] == 0 ? 'user' : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -35,13 +37,14 @@ $classification = null;
 	<nav></nav>
 
 	<?php if ( $_SESSION ['user_data'] ['admin'] ) { ?>
-		<a class="new" href="classificationsForm.php"><i class="fa-solid fa-plus"></i> New</a>
+		<a class="new btn btn-primary" href="classificationsForm.php"><i class="fa-solid fa-plus"></i> New</a>
 	<?php } ?>
 
-	<main>
+	<main class="<?= $user_style; ?>">
 		<?php 
 		foreach ( $classifications as $row ) { ?>
 			<section>
+			<img src="../img/classification.png" alt="">
 				<a class="name" href="./exams.php?c_id=<?= $row ['c_id'] ?>&c_name=<?= $row ['c_name']; ?>">
 					<h4 title="<?= $row ['c_name']; ?>"><?= $row ['c_name']; ?></h4>
 				</a>
