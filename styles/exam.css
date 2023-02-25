@@ -92,8 +92,6 @@ main .q {
   margin-left: 20px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
   overflow: auto;
 }
 main .q:hover {
@@ -155,7 +153,7 @@ main .wrap-login100-form-btn {
   position: relative;
   z-index: 1;
   height: 49.99px;
-  border-radius: 25px;
+  border-radius: 5px;
   overflow: hidden;
   margin: 20px auto;
   box-shadow: 0 5px 30px 0 rgba(3, 216, 222, 0.2);

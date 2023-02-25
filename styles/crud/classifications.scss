@@ -1,7 +1,8 @@
 main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat( 3, 1fr );
+  gap: 2rem 5rem;
+  width: fit-content;
   margin-top: 100px;
   section {
     background-color: white;
@@ -99,4 +100,16 @@ main {
   z-index: 100;
   color: white;
   border-radius: 5px;
+}
+
+@media ( max-width: 567px ) {
+  main {
+    grid-template-columns: repeat( 1, 1fr );
+  }
+}
+
+@media ( min-width: 567px ) and ( max-width: 900px ) {
+  main {
+    grid-template-columns: repeat( 2, 1fr );
+  }
 }

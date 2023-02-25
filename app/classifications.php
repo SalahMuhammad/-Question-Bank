@@ -44,8 +44,8 @@ $user_style = isset( $_SESSION ['user-data'] ['admin'] ) && $_SESSION ['user-dat
 		<?php 
 		foreach ( $classifications as $row ) { ?>
 			<section>
-			<img src="../img/classification.png" alt="">
 				<a class="name" href="./exams.php?c_id=<?= $row ['c_id'] ?>&c_name=<?= $row ['c_name']; ?>">
+					<img src="../img/classification.png" alt="">
 					<h4 title="<?= $row ['c_name']; ?>"><?= $row ['c_name']; ?></h4>
 				</a>
 				<?php if ( $_SESSION ['user_data'] ['admin'] ) { ?>
