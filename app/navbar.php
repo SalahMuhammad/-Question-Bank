@@ -14,11 +14,11 @@ $role = @$_SESSION ['user_data'] ['admin'];
   <ul>
     <?php if ( $role ) { ?>
       <li>
-        <a href="#">Console</a>
+        <a href="#" class="link">Console</a>
       </li>
     <?php } ?>
     <li>
-      <a href="classifications.php">Classifications</a>
+      <a href="classifications.php" class="link">Classifications</a>
     </li>
   </ul>
   

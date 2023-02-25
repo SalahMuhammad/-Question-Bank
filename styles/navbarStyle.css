@@ -52,6 +52,10 @@ nav .right ul li a:hover {
   background-color: rgb(219, 218, 218);
   color: black;
 }
+nav .right ul li .link:hover {
+  background-color: #571bb8;
+  color: white;
+}
 nav .right .action .profile {
   position: relative;
   width: 60px;
